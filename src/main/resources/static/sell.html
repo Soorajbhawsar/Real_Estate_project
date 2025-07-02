@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Properties - Sell Your Property</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container header-container">
+        <div class="logo">Prime<span>Properties</span></div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/properties.html">Properties</a></li>
+                <li><a href="/sell.html" class="active">Sell</a></li>
+                <li><a href="/brokers.html">Brokers</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/login.html" class="nav-btn login-btn">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="sell.html">Sell Property</a>
+    </div>
+</div>
+
+<!-- Sell Property Section -->
+<section class="section sell-property">
+    <div class="container">
+        <div class="sell-container">
+            <div class="sell-content">
+                <h1>Sell Your Property with Prime Properties</h1>
+                <p>Get the best price for your property with our expert marketing, professional photography, and extensive buyer network. Our team will handle everything from valuation to closing.</p>
+
+                <div class="benefits">
+                    <div class="benefit">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Maximize Your Price</h3>
+                        <p>Our pricing strategy ensures you get the best market value for your property.</p>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-bullhorn"></i>
+                        <h3>Premium Marketing</h3>
+                        <p>Your property gets featured across multiple platforms to reach maximum buyers.</p>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Expert Negotiation</h3>
+                        <p>Our experienced brokers negotiate the best deal on your behalf.</p>
+                    </div>
+                    <div class="benefit">
+                        <i class="fas fa-file-contract"></i>
+                        <h3>Hassle-Free Process</h3>
+                        <p>We handle all paperwork and legal formalities for a smooth transaction.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sell-form">
+                <div class="form-card">
+                    <h2>List Your Property</h2>
+                    <form id="propertyListingForm">
+                        <div class="form-group">
+                            <label for="propertyType">Property Type</label>
+                            <select id="propertyType" name="propertyType" required>
+                                <option value="">Select Property Type</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="villa">Villa</option>
+                                <option value="plot">Plot</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="propertyLocation">Location</label>
+                            <input type="text" id="propertyLocation" name="propertyLocation" placeholder="Enter property location" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="bedrooms">Bedrooms</label>
+                                <select id="bedrooms" name="bedrooms">
+                                    <option value="">Select</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="4+">4+</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bathrooms">Bathrooms</label>
+                                <select id="bathrooms" name="bathrooms">
+                                    <option value="">Select</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4+">4+</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="area">Area (sq.ft.)</label>
+                            <input type="number" id="area" name="area" placeholder="Enter area in square feet" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price">Expected Price (₹)</label>
+                            <input type="number" id="price" name="price" placeholder="Enter expected price" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Property Description</label>
+                            <textarea id="description" name="description" rows="4" placeholder="Describe your property features, amenities, etc." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="photos">Upload Photos (Max 10)</label>
+                            <input type="file" id="photos" name="photos" multiple accept="image/*">
+                            <small>High-quality photos attract more buyers</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ownerName">Your Name</label>
+                            <input type="text" id="ownerName" name="ownerName" placeholder="Enter your name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ownerEmail">Email</label>
+                            <input type="email" id="ownerEmail" name="ownerEmail" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ownerPhone">Phone</label>
+                            <input type="tel" id="ownerPhone" name="ownerPhone" placeholder="Enter your phone number" required>
+                        </div>
+
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <label for="agreeTerms">I agree to the Terms & Conditions and Privacy Policy</label>
+                        </div>
+
+                        <button type="submit" class="btn">Submit Property</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Valuation Section -->
+<section class="valuation-section">
+    <div class="container">
+        <div class="valuation-content">
+            <h2>Get a Free Property Valuation</h2>
+            <p>Not sure about your property's current market value? Our experts will provide a free, no-obligation valuation.</p>
+            <form id="valuationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" placeholder="Property Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" placeholder="Your Phone" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Get Valuation</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="section process-section">
+    <div class="container">
+        <h2 class="section-title">Our Selling Process</h2>
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Property Valuation</h3>
+                <p>We assess your property's market value based on current trends and comparable sales.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Marketing Strategy</h3>
+                <p>We create a customized marketing plan to showcase your property to the right buyers.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Viewings</h3>
+                <p>Our brokers arrange and conduct professional viewings with potential buyers.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Offer & Negotiation</h3>
+                <p>We negotiate the best possible price and terms on your behalf.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <h3>Completion</h3>
+                <p>We handle all legal formalities and ensure a smooth transfer of ownership.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Prime Properties</h3>
+                <p>Your trusted partner in finding the perfect property. We're committed to excellence in real estate services.</p>
+                <div class="social-links-footer">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="properties.html">Properties</a></li>
+                    <li><a href="sell.html">Sell Property</a></li>
+                    <li><a href="brokers.html">Our Brokers</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Property Types</h3>
+                <ul>
+                    <li><a href="properties.html?type=apartment">Apartments</a></li>
+                    <li><a href="properties.html?type=villa">Villas</a></li>
+                    <li><a href="properties.html?type=plot">Plots</a></li>
+                    <li><a href="properties.html?type=commercial">Commercial</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest property updates.</p>
+                <form id="newsletterForm">
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Prime Properties. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+<script src="/sell.js"></script>
+</body>
+</html>

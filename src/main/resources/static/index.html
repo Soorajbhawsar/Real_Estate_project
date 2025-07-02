@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Properties - Find Your Dream Home</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container header-container">
+        <div class="logo">Prime<span>Properties</span></div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/properties.html">Properties</a></li>
+                <li><a href="/sell.html">Sell</a></li>
+                <li><a href="/brokers.html">Brokers</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/login.html" class="nav-btn login-btn">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Find Your Dream Home Today</h1>
+            <p>Discover the perfect property that matches your lifestyle and budget from our extensive collection of premium listings.</p>
+            <div class="hero-buttons">
+                <a href="properties.html" class="btn">Browse Properties</a>
+                <a href="sell.html" class="btn btn-outline">List Your Property</a>
+            </div>
+
+            <div class="search-form">
+                <h3>Search Properties</h3>
+                <form id="propertySearchForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <select id="location" name="location">
+                                <option value="">Any Location</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="hyderabad">Hyderabad</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Property Type</label>
+                            <select id="type" name="type">
+                                <option value="">Any Type</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="villa">Villa</option>
+                                <option value="plot">Plot</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="purpose">Purpose</label>
+                            <select id="purpose" name="purpose">
+                                <option value="">Buy/Rent</option>
+                                <option value="buy">Buy</option>
+                                <option value="rent">Rent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Max Price</label>
+                            <select id="price" name="price">
+                                <option value="">Any Price</option>
+                                <option value="500000">₹5,00,000</option>
+                                <option value="1000000">₹10,00,000</option>
+                                <option value="2000000">₹20,00,000</option>
+                                <option value="5000000">₹50,00,000</option>
+                                <option value="10000000">₹1,00,00,000+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Search Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Properties -->
+<section class="section" id="properties">
+    <div class="container">
+        <h2 class="section-title">Featured Properties</h2>
+        <div class="properties" id="propertiesContainer">
+            <!-- Properties will be loaded here by JavaScript -->
+        </div>
+        <div class="text-center">
+            <a href="properties.html" class="btn">View All Properties</a>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="section how-it-works">
+    <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Find a Property</h3>
+                <p>Browse our extensive listings or use our advanced search to find your perfect home.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Connect with a Broker</h3>
+                <p>Our certified brokers will guide you through the entire buying or renting process.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Make It Yours</h3>
+                <p>Complete the transaction and move into your new property with our assistance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="section why-choose-us">
+    <div class="container">
+        <h2 class="section-title">Why Choose Prime Properties</h2>
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Trusted Transactions</h3>
+                <p>Secure and transparent property transactions with verified listings.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-rupee-sign"></i>
+                <h3>Best Prices</h3>
+                <p>Get the best market prices whether you're buying or selling.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-user-tie"></i>
+                <h3>Expert Brokers</h3>
+                <p>Our certified brokers have extensive market knowledge.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-headset"></i>
+                <h3>24/7 Support</h3>
+                <p>Dedicated support team available round the clock.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+    <div class="container">
+        <h2 class="section-title">What Our Clients Say</h2>
+        <div class="testimonial-container">
+            <div class="testimonial-card">
+                <p class="quote">"Prime Properties helped me find my dream home in just two weeks! Their agents were knowledgeable and patient throughout the process."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Riya Sharma">
+                    <div class="author-info">
+                        <h4>Riya Sharma</h4>
+                        <p>Homeowner</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="quote">"As a first-time buyer, I was nervous about the process. The team at Prime Properties made everything so easy and stress-free."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Amit Patel">
+                    <div class="author-info">
+                        <h4>Amit Patel</h4>
+                        <p>First-time Buyer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="quote">"I got 15% above market value for my property thanks to Prime Properties' marketing strategy and negotiation skills."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya Nair">
+                    <div class="author-info">
+                        <h4>Priya Nair</h4>
+                        <p>Property Seller</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Find Your Dream Home?</h2>
+            <p>Join thousands of satisfied customers who found their perfect property with us.</p>
+            <div class="cta-buttons">
+                <a href="properties.html" class="btn">Browse Properties</a>
+                <a href="contact.html" class="btn btn-outline">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Prime Properties</h3>
+                <p>Your trusted partner in finding the perfect property. We're committed to excellence in real estate services.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="properties.html">Properties</a></li>
+                    <li><a href="sell.html">Sell Property</a></li>
+                    <li><a href="brokers.html">Our Brokers</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Property Types</h3>
+                <ul>
+                    <li><a href="properties.html?type=apartment">Apartments</a></li>
+                    <li><a href="properties.html?type=villa">Villas</a></li>
+                    <li><a href="properties.html?type=plot">Plots</a></li>
+                    <li><a href="properties.html?type=commercial">Commercial</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest property updates.</p>
+                <form id="newsletterForm">
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Prime Properties. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="/script.js"></script>
+</body>
+</html>

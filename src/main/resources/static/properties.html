@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Properties - Browse Our Properties</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container header-container">
+        <div class="logo">Prime<span>Properties</span></div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/properties.html" class="active">Properties</a></li>
+                <li><a href="/sell.html">Sell</a></li>
+                <li><a href="/brokers.html">Brokers</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/login.html" class="nav-btn login-btn">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="properties.html">Properties</a>
+    </div>
+</div>
+
+<!-- Properties Section -->
+<section class="section">
+    <div class="container">
+        <h1 class="section-title">Our Properties</h1>
+
+        <div class="property-filters">
+            <div class="filter-toggle">
+                <button id="filterToggle" class="btn btn-outline">
+                    <i class="fas fa-filter"></i> Filters
+                </button>
+            </div>
+            <div class="filter-panel" id="filterPanel">
+                <form id="propertySearchForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <select id="location" name="location">
+                                <option value="">Any Location</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="hyderabad">Hyderabad</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Property Type</label>
+                            <select id="type" name="type">
+                                <option value="">Any Type</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="villa">Villa</option>
+                                <option value="plot">Plot</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="purpose">Purpose</label>
+                            <select id="purpose" name="purpose">
+                                <option value="">Buy/Rent</option>
+                                <option value="buy">Buy</option>
+                                <option value="rent">Rent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price Range</label>
+                            <select id="price" name="price">
+                                <option value="">Any Price</option>
+                                <option value="500000">Under ₹5,00,000</option>
+                                <option value="1000000">₹5-10 Lakhs</option>
+                                <option value="2000000">₹10-20 Lakhs</option>
+                                <option value="5000000">₹20-50 Lakhs</option>
+                                <option value="10000000">₹50 Lakhs+</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bedrooms">Bedrooms</label>
+                            <select id="bedrooms" name="bedrooms">
+                                <option value="">Any</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4+</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sort">Sort By</label>
+                            <select id="sort" name="sort">
+                                <option value="newest">Newest First</option>
+                                <option value="price_asc">Price: Low to High</option>
+                                <option value="price_desc">Price: High to Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-buttons">
+                        <button type="submit" class="btn">Apply Filters</button>
+                        <button type="reset" class="btn btn-outline">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="properties" id="propertiesContainer">
+            <!-- Properties will be loaded here by JavaScript -->
+        </div>
+
+        <div class="pagination">
+            <button class="btn btn-outline" disabled>Previous</button>
+            <button class="btn active">1</button>
+            <button class="btn btn-outline">2</button>
+            <button class="btn btn-outline">3</button>
+            <button class="btn btn-outline">Next</button>
+        </div>
+    </div>
+</section>
+
+<!-- Brokers CTA -->
+<section class="brokers-cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Need Help Finding the Right Property?</h2>
+            <p>Our certified brokers can help you find the perfect property that matches your needs and budget.</p>
+            <a href="brokers.html" class="btn">Find a Broker</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Prime Properties</h3>
+                <p>Your trusted partner in finding the perfect property. We're committed to excellence in real estate services.</p>
+                <div class="social-links-footer">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="properties.html">Properties</a></li>
+                    <li><a href="sell.html">Sell Property</a></li>
+                    <li><a href="brokers.html">Our Brokers</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Property Types</h3>
+                <ul>
+                    <li><a href="properties.html?type=apartment">Apartments</a></li>
+                    <li><a href="properties.html?type=villa">Villas</a></li>
+                    <li><a href="properties.html?type=plot">Plots</a></li>
+                    <li><a href="properties.html?type=commercial">Commercial</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest property updates.</p>
+                <form id="newsletterForm">
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Prime Properties. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="/properties.js"></script>
+</body>
+</html>

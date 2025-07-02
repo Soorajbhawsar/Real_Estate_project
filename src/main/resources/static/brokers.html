@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Properties - Our Brokers</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="container header-container">
+        <div class="logo">Prime<span>Properties</span></div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/properties.html">Properties</a></li>
+                <li><a href="/sell.html">Sell</a></li>
+                <li><a href="/brokers.html" class="active">Brokers</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/contact.html">Contact</a></li>
+                <li><a href="/login.html" class="nav-btn login-btn">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <div class="container">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="brokers.html">Our Brokers</a>
+    </div>
+</div>
+
+<!-- Brokers Section -->
+<section class="section brokers-section">
+    <div class="container">
+        <h1 class="section-title">Our Certified Brokers</h1>
+        <p class="section-subtitle">Meet our team of experienced real estate professionals dedicated to helping you find or sell your perfect property.</p>
+
+        <div class="broker-filters">
+            <form id="brokerSearchForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <select id="location" name="location">
+                            <option value="">All Locations</option>
+                            <option value="mumbai">Mumbai</option>
+                            <option value="delhi">Delhi</option>
+                            <option value="bangalore">Bangalore</option>
+                            <option value="hyderabad">Hyderabad</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialization">Specialization</label>
+                        <select id="specialization" name="specialization">
+                            <option value="">All Specializations</option>
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="luxury">Luxury Properties</option>
+                            <option value="investment">Investment Properties</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Experience</label>
+                        <select id="experience" name="experience">
+                            <option value="">Any Experience</option>
+                            <option value="5">5+ Years</option>
+                            <option value="10">10+ Years</option>
+                            <option value="15">15+ Years</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Find Brokers</button>
+            </form>
+        </div>
+
+        <div class="brokers-container" id="brokersContainer">
+            <!-- Brokers will be loaded here by JavaScript -->
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Our Brokers -->
+<section class="section why-brokers">
+    <div class="container">
+        <h2 class="section-title">Why Work With Our Brokers</h2>
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-medal"></i>
+                <h3>Certified Professionals</h3>
+                <p>All our brokers are certified and undergo regular training to stay updated with market trends.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Local Expertise</h3>
+                <p>In-depth knowledge of local markets, pricing trends, and neighborhood insights.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-hand-holding-usd"></i>
+                <h3>Best Deal Negotiation</h3>
+                <p>Skilled negotiators who ensure you get the best possible price whether buying or selling.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-file-contract"></i>
+                <h3>Paperwork Assistance</h3>
+                <p>Guidance through all legal formalities and documentation for a hassle-free experience.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Become a Broker -->
+<section class="become-broker">
+    <div class="container">
+        <div class="content">
+            <h2>Interested in Joining Our Broker Team?</h2>
+            <p>We're always looking for talented real estate professionals to join our growing team.</p>
+            <a href="contact.html" class="btn">Contact Us</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Prime Properties</h3>
+                <p>Your trusted partner in finding the perfect property. We're committed to excellence in real estate services.</p>
+                <div class="social-links-footer">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="properties.html">Properties</a></li>
+                    <li><a href="sell.html">Sell Property</a></li>
+                    <li><a href="brokers.html">Our Brokers</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Property Types</h3>
+                <ul>
+                    <li><a href="properties.html?type=apartment">Apartments</a></li>
+                    <li><a href="properties.html?type=villa">Villas</a></li>
+                    <li><a href="properties.html?type=plot">Plots</a></li>
+                    <li><a href="properties.html?type=commercial">Commercial</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest property updates.</p>
+                <form id="newsletterForm">
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Prime Properties. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="/script.js"></script>
+</body>
+</html>

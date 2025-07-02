@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Properties | Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #000000;
+            --secondary: #ff0000;
+            --accent: #ff3333;
+            --light: #f8f8f8;
+            --dark: #111111;
+            --text-light: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            color: var(--text-light);
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(20, 20, 20, 0.9);
+        }
+
+        .left-panel {
+            flex: 1;
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(255, 0, 0, 0.1) 30%,
+                rgba(255, 0, 0, 0.05) 50%,
+                transparent 70%
+            );
+            transform: rotate(30deg);
+            animation: glitter 8s infinite linear;
+        }
+
+        @keyframes glitter {
+            0% { transform: rotate(30deg) translateX(-100%); }
+            100% { transform: rotate(30deg) translateX(100%); }
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            color: var(--secondary);
+        }
+
+        .logo i {
+            color: var(--secondary);
+            margin-right: 10px;
+        }
+
+        .welcome-text h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            color: white;
+        }
+
+        .welcome-text h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .right-panel {
+            flex: 1;
+            padding: 50px;
+            background: rgba(30, 30, 30, 0.9);
+            border-left: 1px solid rgba(255, 0, 0, 0.2);
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            position: relative;
+        }
+
+        .tab.active {
+            color: white;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(40, 40, 40, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.3s;
+            color: white;
+        }
+
+        .form-group input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.1);
+            outline: none;
+        }
+
+        .form-group i {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        .social-login {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .social-login p {
+            color: #666;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .social-login p::before,
+        .social-login p::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-login p::before {
+            left: 0;
+        }
+
+        .social-login p::after {
+            right: 0;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+            background: var(--secondary);
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .forgot-password a {
+            color: #666;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .forgot-password a:hover {
+            color: var(--secondary);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Glitter effects */
+        .glitter {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 0, 0, 0.7);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel, .right-panel {
+                padding: 30px;
+            }
+
+            .right-panel {
+                border-left: none;
+                border-top: 1px solid rgba(255, 0, 0, 0.2);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="left-panel">
+        <div class="logo">
+            <i class="fas fa-building"></i> Prime Properties
+        </div>
+        <div class="welcome-text">
+            <h1>Welcome Back</h1>
+            <p>Access your exclusive real estate portfolio, saved properties, and personalized recommendations.</p>
+        </div>
+    </div>
+    <div class="right-panel">
+        <div class="form-container">
+            <div class="tabs">
+                <a href="index.html" class="tab ">Home</a>
+                <a href="login.html" class="tab active">Login</a>
+                <!--                <a href="signup.html" class="tab">Sign Up</a>-->
+
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div class="social-login">
+                <p>Or login with</p>
+                <div class="social-icons">
+                    <div class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <div class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="forgot-password">
+                <a href="#">Forgot Password?</a>
+            </div>
+            <div class="signup-link">
+                Don't have an account? <a href="signup.html">Sign up</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Create red glitter effects
+    function createGlitter() {
+        const glitter = document.createElement('div');
+        glitter.className = 'glitter';
+
+        // Random position
+        glitter.style.left = Math.random() * 100 + 'vw';
+
+        // Random size
+        const size = Math.random() * 6 + 2;
+        glitter.style.width = size + 'px';
+        glitter.style.height = size + 'px';
+
+        // Random opacity
+        glitter.style.opacity = Math.random() * 0.5 + 0.3;
+
+        // Random animation duration
+        const duration = Math.random() * 3 + 2;
+        glitter.style.animationDuration = duration + 's';
+
+        document.body.appendChild(glitter);
+
+        // Remove glitter after animation completes
+        setTimeout(() => {
+            glitter.remove();
+        }, duration * 1000);
+    }
+
+    // Create glitter periodically
+    setInterval(createGlitter, 100);
+
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>
+
+signup.html
+
+

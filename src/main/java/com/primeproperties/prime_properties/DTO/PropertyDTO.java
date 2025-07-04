@@ -1,77 +1,25 @@
-package com.primeproperties.prime_properties.Model;
-
-
-import jakarta.persistence.*;
+package com.primeproperties.prime_properties.DTO;
 
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "properties")
-public class Property {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
+public class PropertyDTO {
     private String title;
-
-    @Column(nullable = false)
     private String location;
-
-    @Column(nullable = false)
     private BigDecimal price;
-
     private Integer bedrooms;
     private Integer bathrooms;
     private Double area;
-
-    @Column(nullable = false)
     private String type;
-
     private String purpose;
     private String description;
     private String imageUrl;
-
-    @Column(nullable = false)
     private String ownerName;
-
-    @Column(nullable = false)
     private String ownerEmail;
-
-    @Column(nullable = false)
     private String ownerPhone;
 
     // Constructors, Getters, and Setters
-    public Property() {
-    }
-
-    public Property(String title, String location, BigDecimal price, Integer bedrooms,
-                    Integer bathrooms, Double area, String type, String purpose,
-                    String description, String imageUrl, String ownerName,
-                    String ownerEmail, String ownerPhone) {
-        this.title = title;
-        this.location = location;
-        this.price = price;
-        this.bedrooms = bedrooms;
-        this.bathrooms = bathrooms;
-        this.area = area;
-        this.type = type;
-        this.purpose = purpose;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.ownerName = ownerName;
-        this.ownerEmail = ownerEmail;
-        this.ownerPhone = ownerPhone;
-    }
-
-    // Getters and Setters for all fields
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public PropertyDTO() {
     }
 
     public String getTitle() {
@@ -147,7 +95,7 @@ public class Property {
     }
 
     public String getImageUrl() {
-        return imageUrl ;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {

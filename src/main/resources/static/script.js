@@ -1,86 +1,5 @@
-// Property Data
-//const properties = [
-//    {
-//        id: 1,
-//        title: "Luxury Apartment in Bandra",
-//        location: "Bandra West, Mumbai",
-//        price: "₹2,50,00,000",
-//        bedrooms: 3,
-//        bathrooms: 2,
-//        area: "1800 sq.ft.",
-//        type: "apartment",
-//        purpose: "buy",
-//        image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-//        date: "2023-05-15"
-//    },
-//    {
-//        id: 2,
-//        title: "Modern Villa in Whitefield",
-//        location: "Whitefield, Bangalore",
-//        price: "₹4,75,00,000",
-//        bedrooms: 4,
-//        bathrooms: 3,
-//        area: "3200 sq.ft.",
-//        type: "villa",
-//        purpose: "buy",
-//        image: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-//        date: "2023-06-20"
-//    },
-//    {
-//        id: 3,
-//        title: "Residential Plot in Gurgaon",
-//        location: "Sector 56, Gurgaon",
-//        price: "₹95,00,000",
-//        bedrooms: 0,
-//        bathrooms: 0,
-//        area: "2400 sq.ft.",
-//        type: "plot",
-//        purpose: "buy",
-//        image: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-//        date: "2023-04-10"
-//    },
-//    {
-//        id: 4,
-//        title: "Premium Office Space",
-//        location: "BKC, Mumbai",
-//        price: "₹8,20,00,000",
-//        bedrooms: 0,
-//        bathrooms: 4,
-//        area: "5000 sq.ft.",
-//        type: "commercial",
-//        purpose: "rent",
-//        image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-//        date: "2023-07-05"
-//    },
-//    {
-//        id: 5,
-//        title: "2BHK Apartment in Hyderabad",
-//        location: "Gachibowli, Hyderabad",
-//        price: "₹1,20,00,000",
-//        bedrooms: 2,
-//        bathrooms: 2,
-//        area: "1200 sq.ft.",
-//        type: "apartment",
-//        purpose: "buy",
-//        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-//        date: "2023-03-22"
-//    },
-//    {
-//        id: 6,
-//        title: "Farmhouse on Outskirts",
-//        location: "Lonavala, Maharashtra",
-//        price: "₹3,50,00,000",
-//        bedrooms: 5,
-//        bathrooms: 4,
-//        area: "2 acres",
-//        type: "villa",
-//        purpose: "rent",
-//        image: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-//        date: "2023-07-18"
-//    }
-//];
-
-// Brokers Data
+// Global variables
+let properties = []; // Will be populated from backend
 const brokers = [
     {
         id: 1,
@@ -132,127 +51,85 @@ const brokers = [
 document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
 
-    // Only run these if the elements exist on the page
+    // Load properties from backend if on properties page
     if (document.getElementById('propertiesContainer')) {
-        displayProperties();
+        loadProperties();
     }
 
+    // Display brokers if on brokers page
     if (document.getElementById('brokersContainer')) {
         displayBrokers();
     }
 
-    if (document.getElementById('propertySearchForm')) {
-        document.getElementById('propertySearchForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            filterProperties();
-        });
-    }
-
-    if (document.getElementById('brokerSearchForm')) {
-        document.getElementById('brokerSearchForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            filterBrokers();
-        });
-    }
-
-    if (document.getElementById('filterToggle')) {
-        document.getElementById('filterToggle').addEventListener('click', function() {
-            document.getElementById('filterPanel').classList.toggle('active');
-        });
-    }
+    // Setup form submissions
+    setupFormHandlers();
 });
 
-// Setup all event listeners
-function setupEventListeners() {
-    // Mobile Menu Toggle
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
+// ======================
+// PROPERTY FUNCTIONS
+// ======================
 
-    if (mobileMenuBtn && mainNav) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-        });
-    }
-
-    // Contact Form Submission
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            handleContactForm();
-        });
-    }
-
-    // Property Listing Form Submission
-    const propertyListingForm = document.getElementById('propertyListingForm');
-    if (propertyListingForm) {
-        propertyListingForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            handlePropertyListing();
-        });
-    }
-
-    // Valuation Form Submission
-    const valuationForm = document.getElementById('valuationForm');
-    if (valuationForm) {
-        valuationForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            handleValuationForm();
-        });
-    }
-
-    // Newsletter Form Submission
-    const newsletterForm = document.getElementById('newsletterForm');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            handleNewsletter();
-        });
+// Load properties from backend
+async function loadProperties() {
+    try {
+        const response = await fetch('http://localhost:8080/api/properties');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        properties = await response.json();
+        displayProperties(properties);
+    } catch (error) {
+        console.error('Error loading properties:', error);
+        const container = document.getElementById('propertiesContainer');
+        if (container) {
+            container.innerHTML = `
+                <div class="error-message">
+                    <h3>Error loading properties</h3>
+                    <p>${error.message}</p>
+                    <p>Please try again later.</p>
+                </div>
+            `;
+        }
     }
 }
 
-// Display Properties
-function displayProperties(propertyList = properties) {
-    const propertiesContainer = document.getElementById('propertiesContainer');
-    if (!propertiesContainer) return;
-
-    propertiesContainer.innerHTML = '';
+// Display properties
+function displayProperties(propertyList = []) {
+    const container = document.getElementById('propertiesContainer');
+    if (!container) return;
 
     if (propertyList.length === 0) {
-        propertiesContainer.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
-                <h3>No properties match your search criteria.</h3>
-                <p>Try adjusting your filters or <a href="contact.html">contact us</a> for personalized assistance.</p>
+        container.innerHTML = `
+            <div class="no-properties">
+                <h3>No properties available</h3>
+                <p>Check back later or list your own property.</p>
             </div>
         `;
         return;
     }
 
-    propertyList.forEach(property => {
-        const propertyCard = document.createElement('div');
-        propertyCard.className = 'property-card';
-        propertyCard.innerHTML = `
+    container.innerHTML = propertyList.map(property => `
+        <div class="property-card">
             <div class="property-img">
-                <span class="property-tag">${property.purpose === 'buy' ? 'For Sale' : 'For Rent'}</span>
-                <img src="${property.image}" alt="${property.title}">
+                <img src="${property.imageUrl || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'}" alt="${property.title}">
+                <span class="property-tag">For ${property.purpose === 'rent' ? 'Rent' : 'Sale'}</span>
             </div>
             <div class="property-info">
                 <h3>${property.title}</h3>
                 <p class="location"><i class="fas fa-map-marker-alt"></i> ${property.location}</p>
-                <p class="price">${property.price} ${property.purpose === 'rent' ? '/ month' : ''}</p>
+                <p class="price">₹${property.price.toLocaleString('en-IN')}</p>
                 <div class="details">
-                    <span><i class="fas fa-bed"></i> ${property.bedrooms} Beds</span>
-                    <span><i class="fas fa-bath"></i> ${property.bathrooms} Baths</span>
-                    <span><i class="fas fa-ruler-combined"></i> ${property.area}</span>
+                    <span><i class="fas fa-bed"></i> ${property.bedrooms || 'N/A'} Beds</span>
+                    <span><i class="fas fa-bath"></i> ${property.bathrooms || 'N/A'} Baths</span>
+                    <span><i class="fas fa-ruler-combined"></i> ${property.area || 'N/A'} sq.ft.</span>
                 </div>
-                <a href="contact.html" class="btn" onclick="localStorage.setItem('propertyInquiry', '${property.title}')">Inquire Now</a>
+                <a href="property.html?id=${property.id}" class="btn">View Details</a>
             </div>
-        `;
-        propertiesContainer.appendChild(propertyCard);
-    });
+        </div>
+    `).join('');
 }
 
-// Filter Properties
+// Filter properties
 function filterProperties() {
     const location = document.getElementById('location')?.value.toLowerCase();
     const type = document.getElementById('type')?.value;
@@ -295,7 +172,7 @@ function filterProperties() {
 
     if (price) {
         filteredProperties = filteredProperties.filter(property => {
-            const propertyPrice = parseInt(property.price.replace(/[^0-9]/g, ''));
+            const propertyPrice = property.price; // Already a number from backend
             return propertyPrice <= parseInt(price);
         });
     }
@@ -304,21 +181,13 @@ function filterProperties() {
     if (sort) {
         switch(sort) {
             case 'price_asc':
-                filteredProperties.sort((a, b) => {
-                    const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
-                    const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
-                    return priceA - priceB;
-                });
+                filteredProperties.sort((a, b) => a.price - b.price);
                 break;
             case 'price_desc':
-                filteredProperties.sort((a, b) => {
-                    const priceA = parseInt(a.price.replace(/[^0-9]/g, ''));
-                    const priceB = parseInt(b.price.replace(/[^0-9]/g, ''));
-                    return priceB - priceA;
-                });
+                filteredProperties.sort((a, b) => b.price - a.price);
                 break;
             case 'newest':
-                filteredProperties.sort((a, b) => new Date(b.date) - new Date(a.date));
+                filteredProperties.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
                 break;
         }
     }
@@ -326,26 +195,74 @@ function filterProperties() {
     displayProperties(filteredProperties);
 }
 
-// Display Brokers
-function displayBrokers(brokerList = brokers) {
-    const brokersContainer = document.getElementById('brokersContainer');
-    if (!brokersContainer) return;
+// Handle property listing form submission
+async function handlePropertyListing() {
+    const form = document.getElementById('propertyListingForm');
+    if (!form) return;
 
-    brokersContainer.innerHTML = '';
+    const formData = {
+        title: `${form.querySelector('#propertyType').value} in ${form.querySelector('#propertyLocation').value}`,
+        location: form.querySelector('#propertyLocation').value,
+        price: parseFloat(form.querySelector('#price').value),
+        bedrooms: parseInt(form.querySelector('#bedrooms').value) || 0,
+        bathrooms: parseInt(form.querySelector('#bathrooms').value) || 0,
+        area: parseFloat(form.querySelector('#area').value),
+        type: form.querySelector('#propertyType').value,
+        purpose: 'sell',
+        description: form.querySelector('#description').value,
+        imageUrl: 'default-property.jpg',
+        ownerName: form.querySelector('#ownerName').value,
+        ownerEmail: form.querySelector('#ownerEmail').value,
+        ownerPhone: form.querySelector('#ownerPhone').value
+    };
+
+    try {
+        const response = await fetch('http://localhost:8080/api/properties', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to submit property');
+        }
+
+        const savedProperty = await response.json();
+        alert('Property listed successfully!');
+
+        // Redirect to properties page
+        window.location.href = 'properties.html';
+
+    } catch (error) {
+        console.error('Error submitting property:', error);
+        alert(`Error: ${error.message}`);
+    }
+}
+
+// ======================
+// BROKER FUNCTIONS
+// ======================
+
+// Display brokers
+function displayBrokers(brokerList = brokers) {
+    const container = document.getElementById('brokersContainer');
+    if (!container) return;
 
     if (brokerList.length === 0) {
-        brokersContainer.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
-                <h3>No brokers match your search criteria.</h3>
+        container.innerHTML = `
+            <div class="no-brokers">
+                <h3>No brokers available</h3>
+                <p>Please check back later.</p>
             </div>
         `;
         return;
     }
 
-    brokerList.forEach(broker => {
-        const brokerCard = document.createElement('div');
-        brokerCard.className = 'broker-card';
-        brokerCard.innerHTML = `
+    container.innerHTML = brokerList.map(broker => `
+        <div class="broker-card">
             <div class="broker-img">
                 <img src="${broker.image}" alt="${broker.name}">
             </div>
@@ -362,12 +279,11 @@ function displayBrokers(brokerList = brokers) {
                     <a href="contact.html"><i class="fas fa-comment"></i></a>
                 </div>
             </div>
-        `;
-        brokersContainer.appendChild(brokerCard);
-    });
+        </div>
+    `).join('');
 }
 
-// Filter Brokers
+// Filter brokers
 function filterBrokers() {
     const location = document.getElementById('location')?.value.toLowerCase();
     const specialization = document.getElementById('specialization')?.value;
@@ -396,21 +312,82 @@ function filterBrokers() {
     displayBrokers(filteredBrokers);
 }
 
-// Handle Contact Form
+// ======================
+// FORM HANDLERS
+// ======================
+
+// Setup all form handlers
+function setupFormHandlers() {
+    // Property Listing Form
+    const propertyForm = document.getElementById('propertyListingForm');
+    if (propertyForm) {
+        propertyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await handlePropertyListing();
+        });
+    }
+
+    // Property Search Form
+    const propertySearchForm = document.getElementById('propertySearchForm');
+    if (propertySearchForm) {
+        propertySearchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            filterProperties();
+        });
+    }
+
+    // Broker Search Form
+    const brokerSearchForm = document.getElementById('brokerSearchForm');
+    if (brokerSearchForm) {
+        brokerSearchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            filterBrokers();
+        });
+    }
+
+    // Contact Form
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleContactForm();
+        });
+    }
+
+    // Valuation Form
+    const valuationForm = document.getElementById('valuationForm');
+    if (valuationForm) {
+        valuationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleValuationForm();
+        });
+    }
+
+    // Newsletter Form
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleNewsletter();
+        });
+    }
+}
+
+// Handle contact form
 function handleContactForm() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const subject = document.getElementById('subject').value;
     const message = document.getElementById('message').value;
 
-    // Check if there's a property inquiry in localStorage
+    // Check for property inquiry
     const propertyInquiry = localStorage.getItem('propertyInquiry');
     if (propertyInquiry) {
         localStorage.removeItem('propertyInquiry');
     }
 
-    // Here you would typically send this data to a server
-    console.log('Form submitted:', {
+    // Here you would send to backend
+    console.log('Contact form submitted:', {
         name,
         email,
         subject: propertyInquiry ? `Inquiry about ${propertyInquiry}` : subject,
@@ -421,63 +398,52 @@ function handleContactForm() {
     document.getElementById('contactForm').reset();
 }
 
-// Handle Property Listing Form
-function handlePropertyListing() {
-    const propertyType = document.getElementById('propertyType').value;
-    const propertyLocation = document.getElementById('propertyLocation').value;
-    const bedrooms = document.getElementById('bedrooms').value;
-    const bathrooms = document.getElementById('bathrooms').value;
-    const area = document.getElementById('area').value;
-    const price = document.getElementById('price').value;
-    const description = document.getElementById('description').value;
-    const ownerName = document.getElementById('ownerName').value;
-    const ownerEmail = document.getElementById('ownerEmail').value;
-    const ownerPhone = document.getElementById('ownerPhone').value;
-
-    // Here you would typically send this data to a server
-    console.log('Property listing submitted:', {
-        propertyType,
-        propertyLocation,
-        bedrooms,
-        bathrooms,
-        area,
-        price,
-        description,
-        ownerName,
-        ownerEmail,
-        ownerPhone
-    });
-
-    alert('Thank you for listing your property! Our team will contact you shortly to discuss further details.');
-    document.getElementById('propertyListingForm').reset();
-}
-
-// Handle Valuation Form
+// Handle valuation form
 function handleValuationForm() {
-    const address = document.getElementById('valuationForm').querySelector('input[type="text"]').value;
-    const name = document.getElementById('valuationForm').querySelectorAll('input[type="text"]')[1].value;
-    const email = document.getElementById('valuationForm').querySelector('input[type="email"]').value;
-    const phone = document.getElementById('valuationForm').querySelector('input[type="tel"]').value;
+    const address = document.querySelector('#valuationForm input[type="text"]').value;
+    const name = document.querySelectorAll('#valuationForm input[type="text"]')[1].value;
+    const email = document.querySelector('#valuationForm input[type="email"]').value;
+    const phone = document.querySelector('#valuationForm input[type="tel"]').value;
 
-    // Here you would typically send this data to a server
-    console.log('Valuation request:', {
-        address,
-        name,
-        email,
-        phone
-    });
+    // Here you would send to backend
+    console.log('Valuation request:', { address, name, email, phone });
 
     alert('Thank you for your valuation request! Our expert will contact you within 24 hours.');
     document.getElementById('valuationForm').reset();
 }
 
-// Handle Newsletter
+// Handle newsletter form
 function handleNewsletter() {
-    const email = document.getElementById('newsletterForm').querySelector('input[type="email"]').value;
+    const email = document.querySelector('#newsletterForm input[type="email"]').value;
 
-    // Here you would typically send this data to a server
+    // Here you would send to backend
     console.log('Newsletter subscription:', email);
 
     alert('Thank you for subscribing to our newsletter!');
     document.getElementById('newsletterForm').reset();
+}
+
+// ======================
+// UI FUNCTIONS
+// ======================
+
+// Setup all event listeners
+function setupEventListeners() {
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+
+    if (mobileMenuBtn && mainNav) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+    }
+
+    // Filter Toggle
+    const filterToggle = document.getElementById('filterToggle');
+    if (filterToggle) {
+        filterToggle.addEventListener('click', () => {
+            document.getElementById('filterPanel').classList.toggle('active');
+        });
+    }
 }

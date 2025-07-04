@@ -9,5 +9,4 @@ public class PrimePropertiesApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PrimePropertiesApplication.class, args);
 	}
-
 }

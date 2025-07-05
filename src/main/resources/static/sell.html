@@ -82,6 +82,16 @@
                                 <option value="villa">Villa</option>
                                 <option value="plot">Plot</option>
                                 <option value="commercial">Commercial</option>
+                                <option value="house">House</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="purpose">Purpose</label>
+                            <select id="purpose" name="purpose">
+                                <option value="">Buy/Rent</option>
+                                <option value="buy">Buy</option>
+                                <option value="rent">Rent</option>
                             </select>
                         </div>
 
@@ -95,10 +105,10 @@
                                 <label for="bedrooms">Bedrooms</label>
                                 <select id="bedrooms" name="bedrooms">
                                     <option value="">Select</option>
+                                    <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
-                                    <option value="4">4</option>
                                     <option value="4+">4+</option>
                                 </select>
                             </div>
@@ -106,6 +116,7 @@
                                 <label for="bathrooms">Bathrooms</label>
                                 <select id="bathrooms" name="bathrooms">
                                     <option value="">Select</option>
+                                    <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -130,9 +141,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="photos">Upload Photos (Max 10)</label>
-                            <input type="file" id="photos" name="photos" multiple accept="image/*">
-                            <small>High-quality photos attract more buyers</small>
+                            <label for="propertyImage">Upload Image</label>
+                            <input type="file" id="propertyImage" name="propertyImage" accept="image/*">
+
                         </div>
 
                         <div class="form-group">

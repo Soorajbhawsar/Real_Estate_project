@@ -70,14 +70,14 @@
                                 <option value="villa">Villa</option>
                                 <option value="plot">Plot</option>
                                 <option value="commercial">Commercial</option>
+                                <option value="house">House</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="purpose">Purpose</label>
-                            <select id="purpose" name="purpose">
-                                <option value="">Buy/Rent</option>
+                            <select id="purpose" name="purpose" required>
                                 <option value="buy">Buy</option>
                                 <option value="rent">Rent</option>
                             </select>
@@ -99,6 +99,7 @@
                             <label for="bedrooms">Bedrooms</label>
                             <select id="bedrooms" name="bedrooms">
                                 <option value="">Any</option>
+                                <option value="0">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -112,6 +113,12 @@
                                 <option value="price_asc">Price: Low to High</option>
                                 <option value="price_desc">Price: High to Low</option>
                             </select>
+
+                            <div class="form-group">
+                                <div class="property-image">
+                                    <img src="/path/to/image.jpg" alt="Property image">
+                                    <span class="property-badge"> </span>
+                                </div>
                         </div>
                     </div>
                     <div class="filter-buttons">

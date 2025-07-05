@@ -226,6 +226,42 @@ nav ul li a:hover {
 .form-row .form-group {
     flex: 1;
 }
+/* Add this to your CSS file */
+.property-image {
+    height: 200px; /* Fixed height */
+    width: 100%; /* Full width of container */
+    overflow: hidden; /* Hide overflow */
+    position: relative; /* For positioning the badge */
+    display: flex; /* For centering the image */
+    align-items: center; /* Vertical center */
+    justify-content: center; /* Horizontal center */
+    background-color: #f5f5f5; /* Fallback background */
+}
+
+.property-image img {
+    width: 100%; /* Fill container width */
+    height: 100%; /* Fill container height */
+    object-fit: cover; /* Maintain aspect ratio while covering area */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.property-card:hover .property-image img {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.property-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1;
+}
+
 
 .filter-buttons {
     display: flex;
@@ -1028,3 +1064,4 @@ footer {
     height: 100%;
     overflow: auto;
     background-color:
+

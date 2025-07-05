@@ -1,228 +1,260 @@
+// PrimeProperties Main JavaScript File
+// Contains all functionality for the real estate website
+
 // Global variables
-let properties = []; // Will be populated from backend
-const brokers = [
-    {
-        id: 1,
-        name: "Rahul Sharma",
-        specialty: "Luxury Properties",
-        location: "Mumbai",
-        experience: 12,
-        propertiesSold: 245,
-        image: "https://randomuser.me/api/portraits/men/32.jpg",
-        phone: "+91 98765 43210",
-        email: "rahul@primeproperties.com"
-    },
-    {
-        id: 2,
-        name: "Priya Patel",
-        specialty: "Commercial Real Estate",
-        location: "Delhi",
-        experience: 8,
-        propertiesSold: 178,
-        image: "https://randomuser.me/api/portraits/women/44.jpg",
-        phone: "+91 87654 32109",
-        email: "priya@primeproperties.com"
-    },
-    {
-        id: 3,
-        name: "Amit Kumar",
-        specialty: "Residential Properties",
-        location: "Bangalore",
-        experience: 6,
-        propertiesSold: 132,
-        image: "https://randomuser.me/api/portraits/men/75.jpg",
-        phone: "+91 76543 21098",
-        email: "amit@primeproperties.com"
-    },
-    {
-        id: 4,
-        name: "Neha Gupta",
-        specialty: "Investment Properties",
-        location: "Hyderabad",
-        experience: 10,
-        propertiesSold: 210,
-        image: "https://randomuser.me/api/portraits/women/68.jpg",
-        phone: "+91 65432 10987",
-        email: "neha@primeproperties.com"
-    }
-];
+let properties = []; // Will store properties fetched from backend
+const brokers = [];  // Will store brokers data (can be populated from backend)
 
-// Initialize the page
+// Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    setupEventListeners();
-
-    // Load properties from backend if on properties page
-    if (document.getElementById('propertiesContainer')) {
-        loadProperties();
-    }
-
-    // Display brokers if on brokers page
-    if (document.getElementById('brokersContainer')) {
-        displayBrokers();
-    }
-
-    // Setup form submissions
-    setupFormHandlers();
+    initializeApplication();
 });
+
+function initializeApplication() {
+    setupEventListeners();
+    loadInitialData();
+    setupForms();
+}
+
+// ======================
+// CORE FUNCTIONS
+// ======================
+
+function setupEventListeners() {
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    }
+
+    // Filter toggles
+    const filterToggles = document.querySelectorAll('.filter-toggle');
+    filterToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const target = document.getElementById(toggle.dataset.target);
+            if (target) target.classList.toggle('active');
+        });
+    });
+}
+
+function loadInitialData() {
+    // Load properties if on properties page
+    if (document.getElementById('propertiesContainer')) {
+        fetchProperties();
+    }
+
+    // Load brokers if on brokers page
+    if (document.getElementById('brokersContainer')) {
+        fetchBrokers();
+    }
+}
+
+function setupForms() {
+    // Property listing form
+    const propertyForm = document.getElementById('propertyListingForm');
+    if (propertyForm) {
+        propertyForm.addEventListener('submit', handlePropertySubmission);
+    }
+
+    // Contact form
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContactSubmission);
+    }
+
+    // Newsletter form
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', handleNewsletterSubmission);
+    }
+}
 
 // ======================
 // PROPERTY FUNCTIONS
 // ======================
 
-// Load properties from backend
-async function loadProperties() {
+async function fetchProperties() {
     try {
-        const response = await fetch('http://localhost:8080/api/properties');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const response = await fetch('/api/properties');
+        if (!response.ok) throw new Error('Failed to fetch properties');
+
         properties = await response.json();
-        displayProperties(properties);
+        renderProperties(properties);
     } catch (error) {
         console.error('Error loading properties:', error);
-        const container = document.getElementById('propertiesContainer');
-        if (container) {
-            container.innerHTML = `
-                <div class="error-message">
-                    <h3>Error loading properties</h3>
-                    <p>${error.message}</p>
-                    <p>Please try again later.</p>
-                </div>
-            `;
-        }
+        showError('propertiesContainer', 'Failed to load properties. Please try again later.');
     }
 }
 
-// Display properties
-function displayProperties(propertyList = []) {
+function renderProperties(propertiesToRender) {
     const container = document.getElementById('propertiesContainer');
     if (!container) return;
 
-    if (propertyList.length === 0) {
+    if (!propertiesToRender || propertiesToRender.length === 0) {
         container.innerHTML = `
-            <div class="no-properties">
-                <h3>No properties available</h3>
-                <p>Check back later or list your own property.</p>
+            <div class="empty-state">
+                <i class="fas fa-home"></i>
+                <h3>No Properties Found</h3>
+                <p>There are currently no properties matching your criteria.</p>
             </div>
         `;
         return;
     }
 
-    container.innerHTML = propertyList.map(property => `
+    container.innerHTML = propertiesToRender.map(property => `
         <div class="property-card">
-            <div class="property-img">
-                <img src="${property.imageUrl || 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'}" alt="${property.title}">
-                <span class="property-tag">For ${property.purpose === 'rent' ? 'Rent' : 'Sale'}</span>
+            <div class="property-image">
+                <img src="/api/properties/images/${property.imageUrl || 'default.jpg'}"
+                     alt="${property.title}"
+                     onerror="this.src='/images/default-property.jpg'">
+                <span class="property-badge">${property.purpose === 'rent' ? 'For Rent' : 'For Sale'}</span>
             </div>
-            <div class="property-info">
+            <div class="property-details">
                 <h3>${property.title}</h3>
                 <p class="location"><i class="fas fa-map-marker-alt"></i> ${property.location}</p>
                 <p class="price">₹${property.price.toLocaleString('en-IN')}</p>
-                <div class="details">
-                    <span><i class="fas fa-bed"></i> ${property.bedrooms || 'N/A'} Beds</span>
-                    <span><i class="fas fa-bath"></i> ${property.bathrooms || 'N/A'} Baths</span>
-                    <span><i class="fas fa-ruler-combined"></i> ${property.area || 'N/A'} sq.ft.</span>
+                <div class="features">
+                    <span><i class="fas fa-bed"></i> ${property.bedrooms || '-'} Beds</span>
+                    <span><i class="fas fa-bath"></i> ${property.bathrooms || '-'} Baths</span>
+                    <span><i class="fas fa-ruler-combined"></i> ${property.area || '-'} sq.ft.</span>
                 </div>
-                <a href="property.html?id=${property.id}" class="btn">View Details</a>
+                <a href="/property-details.html?id=${property.id}" class="btn">View Details</a>
             </div>
         </div>
     `).join('');
 }
 
-// Filter properties
 function filterProperties() {
-    const location = document.getElementById('location')?.value.toLowerCase();
-    const type = document.getElementById('type')?.value;
-    const purpose = document.getElementById('purpose')?.value;
-    const price = document.getElementById('price')?.value;
-    const bedrooms = document.getElementById('bedrooms')?.value;
-    const sort = document.getElementById('sort')?.value;
+    const locationFilter = document.getElementById('locationFilter')?.value.toLowerCase();
+    const typeFilter = document.getElementById('typeFilter')?.value;
+    const priceFilter = document.getElementById('priceFilter')?.value;
 
-    let filteredProperties = [...properties];
+    let filtered = [...properties];
 
-    if (location) {
-        filteredProperties = filteredProperties.filter(property =>
-            property.location.toLowerCase().includes(location)
+    if (locationFilter) {
+        filtered = filtered.filter(p =>
+            p.location.toLowerCase().includes(locationFilter)
         );
     }
 
-    if (type) {
-        filteredProperties = filteredProperties.filter(property =>
-            property.type === type
-        );
+    if (typeFilter) {
+        filtered = filtered.filter(p => p.type === typeFilter);
     }
 
-    if (purpose) {
-        filteredProperties = filteredProperties.filter(property =>
-            property.purpose === purpose
-        );
+    if (priceFilter) {
+        const maxPrice = parseInt(priceFilter);
+        filtered = filtered.filter(p => p.price <= maxPrice);
     }
 
-    if (bedrooms) {
-        if (bedrooms === '4+') {
-            filteredProperties = filteredProperties.filter(property =>
-                property.bedrooms >= 4
-            );
-        } else {
-            filteredProperties = filteredProperties.filter(property =>
-                property.bedrooms === parseInt(bedrooms)
-            );
-        }
-    }
-
-    if (price) {
-        filteredProperties = filteredProperties.filter(property => {
-            const propertyPrice = property.price; // Already a number from backend
-            return propertyPrice <= parseInt(price);
-        });
-    }
-
-    // Sorting
-    if (sort) {
-        switch(sort) {
-            case 'price_asc':
-                filteredProperties.sort((a, b) => a.price - b.price);
-                break;
-            case 'price_desc':
-                filteredProperties.sort((a, b) => b.price - a.price);
-                break;
-            case 'newest':
-                filteredProperties.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-                break;
-        }
-    }
-
-    displayProperties(filteredProperties);
+    renderProperties(filtered);
 }
 
-// Handle property listing form submission
-async function handlePropertyListing() {
-    const form = document.getElementById('propertyListingForm');
-    if (!form) return;
+// ======================
+// BROKER FUNCTIONS
+// ======================
 
-    const formData = {
-        title: `${form.querySelector('#propertyType').value} in ${form.querySelector('#propertyLocation').value}`,
-        location: form.querySelector('#propertyLocation').value,
-        price: parseFloat(form.querySelector('#price').value),
-        bedrooms: parseInt(form.querySelector('#bedrooms').value) || 0,
-        bathrooms: parseInt(form.querySelector('#bathrooms').value) || 0,
-        area: parseFloat(form.querySelector('#area').value),
-        type: form.querySelector('#propertyType').value,
-        purpose: 'sell',
-        description: form.querySelector('#description').value,
-        imageUrl: 'default-property.jpg',
-        ownerName: form.querySelector('#ownerName').value,
-        ownerEmail: form.querySelector('#ownerEmail').value,
-        ownerPhone: form.querySelector('#ownerPhone').value
-    };
+async function fetchBrokers() {
+    try {
+        const response = await fetch('/api/brokers');
+        if (!response.ok) throw new Error('Failed to fetch brokers');
+
+        brokers = await response.json();
+        renderBrokers(brokers);
+    } catch (error) {
+        console.error('Error loading brokers:', error);
+        showError('brokersContainer', 'Failed to load brokers. Please try again later.');
+    }
+}
+
+function renderBrokers(brokersToRender) {
+    const container = document.getElementById('brokersContainer');
+    if (!container) return;
+
+    if (!brokersToRender || brokersToRender.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-user-tie"></i>
+                <h3>No Brokers Available</h3>
+                <p>There are currently no brokers in your area.</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = brokersToRender.map(broker => `
+        <div class="broker-card">
+            <div class="broker-image">
+                <img src="${broker.imageUrl || '/images/default-broker.jpg'}"
+                     alt="${broker.name}">
+            </div>
+            <div class="broker-details">
+                <h3>${broker.name}</h3>
+                <p class="specialization">${broker.specialization}</p>
+                <p class="location"><i class="fas fa-map-marker-alt"></i> ${broker.location}</p>
+                <div class="broker-meta">
+                    <span class="experience">${broker.experience} Years Exp</span>
+                    <span class="properties-sold">${broker.propertiesSold} Properties</span>
+                </div>
+                <div class="broker-contact">
+                    <a href="tel:${broker.phone}"><i class="fas fa-phone"></i></a>
+                    <a href="mailto:${broker.email}"><i class="fas fa-envelope"></i></a>
+                    <a href="/contact.html?broker=${broker.id}"><i class="fas fa-comment"></i></a>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// ======================
+// FORM HANDLERS
+// ======================
+
+async function handlePropertySubmission(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
 
     try {
-        const response = await fetch('http://localhost:8080/api/properties', {
+        // Validate form
+        if (!validateForm(form)) return;
+
+        // Show loading state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+        // Upload image if exists
+        const imageFile = formData.get('propertyImage');
+        let imageUrl = 'default.jpg';
+
+        if (imageFile && imageFile.size > 0) {
+            imageUrl = await uploadImage(imageFile);
+        }
+
+        // Prepare property data
+        const propertyData = {
+            title: `${formData.get('propertyType')} in ${formData.get('propertyLocation')}`,
+            location: formData.get('propertyLocation'),
+            price: parseFloat(formData.get('price')),
+            bedrooms: parseInt(formData.get('bedrooms')) || 0,
+            bathrooms: parseInt(formData.get('bathrooms')) || 0,
+            area: parseFloat(formData.get('area')),
+            type: formData.get('propertyType'),
+            purpose: 'sell', // Default to sell
+            description: formData.get('description'),
+            imageUrl: imageUrl,
+            ownerName: formData.get('ownerName'),
+            ownerEmail: formData.get('ownerEmail'),
+            ownerPhone: formData.get('ownerPhone')
+        };
+
+        // Submit to backend
+        const response = await fetch('/api/properties', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(propertyData)
         });
 
         if (!response.ok) {
@@ -230,220 +262,214 @@ async function handlePropertyListing() {
             throw new Error(errorData.message || 'Failed to submit property');
         }
 
-        const savedProperty = await response.json();
-        alert('Property listed successfully!');
-
-        // Redirect to properties page
-        window.location.href = 'properties.html';
+        // Success
+        alert('Property submitted successfully!');
+        form.reset();
+        window.location.href = '/properties.html';
 
     } catch (error) {
-        console.error('Error submitting property:', error);
+        console.error('Submission error:', error);
         alert(`Error: ${error.message}`);
+    } finally {
+        // Reset button state
+        const submitBtn = form.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        }
     }
 }
 
-// ======================
-// BROKER FUNCTIONS
-// ======================
+async function uploadImage(file) {
+    const formData = new FormData();
+    formData.append('file', file);
 
-// Display brokers
-function displayBrokers(brokerList = brokers) {
-    const container = document.getElementById('brokersContainer');
-    if (!container) return;
+    const response = await fetch('/api/properties/upload', {
+        method: 'POST',
+        body: formData
+    });
 
-    if (brokerList.length === 0) {
-        container.innerHTML = `
-            <div class="no-brokers">
-                <h3>No brokers available</h3>
-                <p>Please check back later.</p>
-            </div>
-        `;
+    if (!response.ok) {
+        throw new Error('Image upload failed');
+    }
+
+    return await response.text();
+}
+
+function handleContactSubmission(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    if (!validateForm(form)) return;
+
+    // Prepare contact data
+    const contactData = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        subject: formData.get('subject'),
+        message: formData.get('message'),
+        propertyInquiry: localStorage.getItem('propertyInquiry') || null
+    };
+
+    // Submit to backend (simulated)
+    setTimeout(() => {
+        console.log('Contact form submitted:', contactData);
+        alert('Thank you for your message! We will contact you soon.');
+        form.reset();
+        localStorage.removeItem('propertyInquiry');
+    }, 1000);
+}
+
+function handleNewsletterSubmission(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const email = form.querySelector('input[type="email"]').value;
+
+    if (!email || !validateEmail(email)) {
+        alert('Please enter a valid email address');
         return;
     }
 
-    container.innerHTML = brokerList.map(broker => `
-        <div class="broker-card">
-            <div class="broker-img">
-                <img src="${broker.image}" alt="${broker.name}">
-            </div>
-            <div class="broker-info">
-                <h3>${broker.name}</h3>
-                <span class="broker-specialty">${broker.specialty}</span>
-                <p class="broker-location"><i class="fas fa-map-marker-alt"></i> ${broker.location}</p>
-                <div class="broker-experience">
-                    <span class="experience-badge">${broker.experience}+ Years Experience</span>
-                </div>
-                <div class="broker-contact">
-                    <a href="tel:${broker.phone}"><i class="fas fa-phone"></i></a>
-                    <a href="mailto:${broker.email}"><i class="fas fa-envelope"></i></a>
-                    <a href="contact.html"><i class="fas fa-comment"></i></a>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Filter brokers
-function filterBrokers() {
-    const location = document.getElementById('location')?.value.toLowerCase();
-    const specialization = document.getElementById('specialization')?.value;
-    const experience = document.getElementById('experience')?.value;
-
-    let filteredBrokers = [...brokers];
-
-    if (location) {
-        filteredBrokers = filteredBrokers.filter(broker =>
-            broker.location.toLowerCase().includes(location)
-        );
-    }
-
-    if (specialization) {
-        filteredBrokers = filteredBrokers.filter(broker =>
-            broker.specialty.toLowerCase().includes(specialization)
-        );
-    }
-
-    if (experience) {
-        filteredBrokers = filteredBrokers.filter(broker =>
-            broker.experience >= parseInt(experience)
-        );
-    }
-
-    displayBrokers(filteredBrokers);
+    // Submit to backend (simulated)
+    setTimeout(() => {
+        console.log('Newsletter subscription:', email);
+        alert('Thank you for subscribing to our newsletter!');
+        form.reset();
+    }, 1000);
 }
 
 // ======================
-// FORM HANDLERS
+// UTILITY FUNCTIONS
 // ======================
 
-// Setup all form handlers
-function setupFormHandlers() {
-    // Property Listing Form
-    const propertyForm = document.getElementById('propertyListingForm');
-    if (propertyForm) {
-        propertyForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await handlePropertyListing();
-        });
-    }
+function validateForm(form) {
+    let isValid = true;
+    const requiredFields = form.querySelectorAll('[required]');
 
-    // Property Search Form
-    const propertySearchForm = document.getElementById('propertySearchForm');
-    if (propertySearchForm) {
-        propertySearchForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            filterProperties();
-        });
-    }
-
-    // Broker Search Form
-    const brokerSearchForm = document.getElementById('brokerSearchForm');
-    if (brokerSearchForm) {
-        brokerSearchForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            filterBrokers();
-        });
-    }
-
-    // Contact Form
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            handleContactForm();
-        });
-    }
-
-    // Valuation Form
-    const valuationForm = document.getElementById('valuationForm');
-    if (valuationForm) {
-        valuationForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            handleValuationForm();
-        });
-    }
-
-    // Newsletter Form
-    const newsletterForm = document.getElementById('newsletterForm');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            handleNewsletter();
-        });
-    }
-}
-
-// Handle contact form
-function handleContactForm() {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const message = document.getElementById('message').value;
-
-    // Check for property inquiry
-    const propertyInquiry = localStorage.getItem('propertyInquiry');
-    if (propertyInquiry) {
-        localStorage.removeItem('propertyInquiry');
-    }
-
-    // Here you would send to backend
-    console.log('Contact form submitted:', {
-        name,
-        email,
-        subject: propertyInquiry ? `Inquiry about ${propertyInquiry}` : subject,
-        message: propertyInquiry ? `I'm interested in ${propertyInquiry}. ${message}` : message
+    requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+            isValid = false;
+            field.classList.add('error');
+            // Add error message if not already present
+            if (!field.nextElementSibling?.classList.contains('error-message')) {
+                const errorMsg = document.createElement('small');
+                errorMsg.className = 'error-message';
+                errorMsg.textContent = 'This field is required';
+                field.insertAdjacentElement('afterend', errorMsg);
+            }
+        } else {
+            field.classList.remove('error');
+            // Remove error message if exists
+            if (field.nextElementSibling?.classList.contains('error-message')) {
+                field.nextElementSibling.remove();
+            }
+        }
     });
 
-    alert('Thank you for your message! We will get back to you soon.');
-    document.getElementById('contactForm').reset();
+    return isValid;
 }
 
-// Handle valuation form
-function handleValuationForm() {
-    const address = document.querySelector('#valuationForm input[type="text"]').value;
-    const name = document.querySelectorAll('#valuationForm input[type="text"]')[1].value;
-    const email = document.querySelector('#valuationForm input[type="email"]').value;
-    const phone = document.querySelector('#valuationForm input[type="tel"]').value;
-
-    // Here you would send to backend
-    console.log('Valuation request:', { address, name, email, phone });
-
-    alert('Thank you for your valuation request! Our expert will contact you within 24 hours.');
-    document.getElementById('valuationForm').reset();
+function validateEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
 }
 
-// Handle newsletter form
-function handleNewsletter() {
-    const email = document.querySelector('#newsletterForm input[type="email"]').value;
+function showError(containerId, message) {
+    const container = document.getElementById(containerId);
+    if (container) {
+        container.innerHTML = `
+            <div class="error-state">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>Error</h3>
+                <p>${message}</p>
+            </div>
+        `;
+    }
+}
 
-    // Here you would send to backend
-    console.log('Newsletter subscription:', email);
+function toggleMobileMenu() {
+    const nav = document.getElementById('mainNav');
+    const btn = document.getElementById('mobileMenuBtn');
 
-    alert('Thank you for subscribing to our newsletter!');
-    document.getElementById('newsletterForm').reset();
+    if (nav && btn) {
+        nav.classList.toggle('active');
+        btn.innerHTML = nav.classList.contains('active')
+            ? '<i class="fas fa-times"></i>'
+            : '<i class="fas fa-bars"></i>';
+    }
 }
 
 // ======================
-// UI FUNCTIONS
+// INITIALIZATION
 // ======================
 
-// Setup all event listeners
-function setupEventListeners() {
-    // Mobile Menu Toggle
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const mainNav = document.getElementById('mainNav');
-
-    if (mobileMenuBtn && mainNav) {
-        mobileMenuBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-        });
+// If on property details page, load the specific property
+if (window.location.pathname.includes('property-details.html')) {
+    const propertyId = new URLSearchParams(window.location.search).get('id');
+    if (propertyId) {
+        loadPropertyDetails(propertyId);
     }
+}
 
-    // Filter Toggle
-    const filterToggle = document.getElementById('filterToggle');
-    if (filterToggle) {
-        filterToggle.addEventListener('click', () => {
-            document.getElementById('filterPanel').classList.toggle('active');
-        });
+async function loadPropertyDetails(id) {
+    try {
+        const response = await fetch(`/api/properties/${id}`);
+        if (!response.ok) throw new Error('Property not found');
+
+        const property = await response.json();
+        renderPropertyDetails(property);
+    } catch (error) {
+        console.error('Error loading property:', error);
+        showError('propertyDetailsContainer', 'Failed to load property details.');
     }
+}
+
+function renderPropertyDetails(property) {
+    const container = document.getElementById('propertyDetailsContainer');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="property-gallery">
+            <div class="main-image">
+                <img src="/api/properties/images/${property.imageUrl || 'default.jpg'}"
+                     alt="${property.title}">
+            </div>
+        </div>
+        <div class="property-info">
+            <h1>${property.title}</h1>
+            <p class="location"><i class="fas fa-map-marker-alt"></i> ${property.location}</p>
+            <p class="price">₹${property.price.toLocaleString('en-IN')}</p>
+
+            <div class="property-meta">
+                <div class="meta-item">
+                    <i class="fas fa-bed"></i>
+                    <span>${property.bedrooms || '-'} Bedrooms</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-bath"></i>
+                    <span>${property.bathrooms || '-'} Bathrooms</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-ruler-combined"></i>
+                    <span>${property.area || '-'} sq.ft.</span>
+                </div>
+                <div class="meta-item">
+                    <i class="fas fa-home"></i>
+                    <span>${property.type}</span>
+                </div>
+            </div>
+
+            <div class="property-description">
+                <h3>Description</h3>
+                <p>${property.description || 'No description provided.'}</p>
+            </div>
+
+            <button class="btn contact-btn" onclick="location.href='/contact.html?property=${property.id}'">
+                Contact Owner
+            </button>
+        </div>
+    `;
 }

@@ -73,7 +73,7 @@
             <div class="sell-form">
                 <div class="form-card">
                     <h2>List Your Property</h2>
-                    <form id="propertyListingForm">
+                    <form id="propertyListingForm" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="propertyType">Property Type</label>
                             <select id="propertyType" name="propertyType" required>
@@ -87,17 +87,17 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="purpose">Purpose</label>
-                            <select id="purpose" name="purpose">
-                                <option value="">Buy/Rent</option>
-                                <option value="buy">Buy</option>
+                            <label for="purpose">Purpose <span class="required">*</span></label>
+                            <select id="purpose" name="purpose" required>
+                                <option value="" disabled selected hidden>Select Purpose</option>
+                                <option value="sell">Sell</option>
                                 <option value="rent">Rent</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="propertyLocation">Location</label>
-                            <input type="text" id="propertyLocation" name="propertyLocation" placeholder="Enter property location" required>
+                            <label for="location">Location</label>
+                            <input type="text" id="location" name="location" placeholder="Enter property location" required>
                         </div>
 
                         <div class="form-row">
@@ -126,8 +126,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="area">Area (sq.ft.)</label>
-                            <input type="number" id="area" name="area" placeholder="Enter area in square feet" required>
+                            <label for="area_sq_ft">Area (sq.ft.)</label>
+                            <input type="number" id="area_sq_ft" name="areaSqFt" placeholder="Enter area in square feet" required>
                         </div>
 
                         <div class="form-group">
@@ -140,10 +140,10 @@
                             <textarea id="description" name="description" rows="4" placeholder="Describe your property features, amenities, etc." required></textarea>
                         </div>
 
+
                         <div class="form-group">
                             <label for="propertyImage">Upload Image</label>
-                            <input type="file" id="propertyImage" name="propertyImage" accept="image/*">
-
+                            <input type="file" id="propertyImage" name="image" accept="image/*">
                         </div>
 
                         <div class="form-group">
@@ -288,5 +288,6 @@
     </div>
 </footer>
 <script src="script.js"></script>
+
 </body>
 </html>
